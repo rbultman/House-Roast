@@ -1,0 +1,104 @@
+// start the oven at a 200F Bake before running this code.
+
+var greenBean = require("green-bean");
+var PROFILE1 = [
+  { temp: 200, duration: 60000 },
+  { temp: 210, duration: 30000 },
+  { temp: 220, duration: 30000 },
+  { temp: 230, duration: 30000 },
+  { temp: 240, duration: 30000 },
+  { temp: 250, duration: 30000 },
+  { temp: 260, duration: 30000 },
+  { temp: 270, duration: 30000 },
+  { temp: 280, duration: 30000 },
+  { temp: 290, duration: 30000 },
+  { temp: 300, duration: 30000 },
+  { temp: 310, duration: 30000 },
+  { temp: 320, duration: 30000 },
+  { temp: 330, duration: 30000 },
+  { temp: 340, duration: 10000 },
+  { temp: 342, duration: 10000 },
+  { temp: 344, duration: 10000 },
+  { temp: 346, duration: 10000 },
+  { temp: 348, duration: 10000 },
+  { temp: 350, duration: 10000 },
+  { temp: 352, duration: 10000 },
+  { temp: 354, duration: 10000 },
+  { temp: 356, duration: 10000 },
+  { temp: 358, duration: 10000 },
+  { temp: 360, duration: 10000 },
+  { temp: 362, duration: 10000 },
+  { temp: 364, duration: 10000 },
+  { temp: 366, duration: 10000 },
+  { temp: 368, duration: 10000 },
+  { temp: 370, duration: 10000 },
+  { temp: 372, duration: 10000 },
+  { temp: 374, duration: 10000 },
+  { temp: 376, duration: 10000 },
+  { temp: 378, duration: 10000 },
+  { temp: 380, duration: 10000 },
+  { temp: 382, duration: 10000 },
+  { temp: 384, duration: 10000 },
+  { temp: 386, duration: 10000 },
+  { temp: 388, duration: 10000 },
+  { temp: 390, duration: 10000 },
+  { temp: 392, duration: 10000 },
+  { temp: 394, duration: 10000 },
+  { temp: 396, duration: 10000 },
+  { temp: 398, duration: 10000 },
+  { temp: 400, duration: 10000 },
+  { temp: 402, duration: 10000 },
+  { temp: 404, duration: 10000 },
+  { temp: 406, duration: 10000 },
+  { temp: 408, duration: 10000 },
+  { temp: 410, duration: 10000 },
+  { temp: 412, duration: 10000 },
+  { temp: 414, duration: 10000 },
+  { temp: 416, duration: 10000 },
+  { temp: 418, duration: 10000 },
+  { temp: 420, duration: 10000 },
+  { temp: 422, duration: 10000 },
+  { temp: 424, duration: 12000 },
+  { temp: 425, duration: 12000 },
+  { temp: 426, duration: 12000 },
+  { temp: 427, duration: 12000 },
+  { temp: 428, duration: 12000 },
+  { temp: 429, duration: 12000 },
+  { temp: 430, duration: 12000 },
+  { temp: 431, duration: 12000 },
+  { temp: 432, duration: 12000 },
+  { temp: 433, duration: 12000 },
+  { temp: 434, duration: 12000 },
+
+];
+
+function startCooking(range, profile, callback, step) {
+  var index = step || 0;
+  var setpoint = profile[index];
+
+  if (setpoint) {
+    console.log('setting temp to ' + setpoint.temp);
+	  range.lowerOven.cookMode.write({
+		mode: 27,
+		cookTemperature: setpoint.temp,
+		cookHours: 0,
+		cookMinutes: 0
+	    });
+
+    setTimeout(startCooking.bind(this, range, profile, callback, index + 1),
+      setpoint.duration);
+  }
+  else {
+    callback(null);
+  }
+}
+
+greenBean.connect("range", function(range) {
+  startCooking(range, PROFILE1, function(err) {
+    if (err) console.error(err);
+    else console.log('cool beans');
+  });
+});
+
+
+
