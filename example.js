@@ -1,9 +1,9 @@
 var NORMAL_PROFILE = [
-  { temp: 200, duration: 1000 },
-  { temp: 210, duration: 2000 },
-  { temp: 220, duration: 1000 },
-  { temp: 240, duration: 500 },
-  { temp: 260, duration: 1500 },
+  { temp: 200, duration: 5000 },
+  { temp: 210, duration: 5000 },
+  { temp: 220, duration: 3000 },
+  { temp: 240, duration: 2000 },
+  { temp: 260, duration: 3000 },
 ];
 
 var SPEEDY_PROFILE = [
@@ -20,7 +20,7 @@ function startCooking(profile, callback, step) {
 
   if (mode) {
     console.log('setting temp to ' + mode.temp);
-
+    setInterval(console.log('keep it up!'), 1000);
     setTimeout(startCooking.bind(this, profile, callback, index + 1),
       mode.duration);
   }
